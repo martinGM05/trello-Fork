@@ -16,6 +16,7 @@ Trello.prototype.createQuery = function () {
 };
 
 function makeRequest(fn, uri, options, callback) {
+    
     if (callback) {
       var completeCallback = function (result, response) {
         // in case we hit HTTP 429, delay requests by random timeout in between minRequestDelay and maxRequestDelay
@@ -37,7 +38,6 @@ function makeRequest(fn, uri, options, callback) {
       }
 
       fn(uri, options).once('complete', completeCallback);
-
     } else {
         return new Promise((resolve, reject) => {
 
@@ -61,6 +61,7 @@ function makeRequest(fn, uri, options, callback) {
             }
 
             fn(uri, options).once('complete', completeCallback);
+            console.log('Fin 2')
         });
     }
 }
@@ -137,7 +138,7 @@ Trello.prototype.addCard = function (name, description, listId, callback) {
 
     if (description !== null)
         query.desc = description;
-
+    // console.log(query);
     return makeRequest(rest.post, this.uri + '/1/cards', {query: query}, callback);
 };
 
